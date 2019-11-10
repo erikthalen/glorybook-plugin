@@ -1,0 +1,34 @@
+{
+  "name": "glorybook",
+  "version": "1.2.1",
+  "description": "Webpack plugin for creating storybook pages from contentful data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "inst": "yarn install && cd demo && yarn install",
+    "demo": "cd demo && webpack && yarn storybook",
+    "build": "cd demo && webpack"
+  },
+  "engines": {
+    "node": ">= 10.*"
+  },
+  "keywords": [
+    "storybook",
+    "contentful",
+    "webpack"
+  ],
+  "author": "Erik Thalén",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erikthalen/glorybook-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/erikthalen/glorybook-plugin/issues"
+  },
+  "homepage": "https://github.com/erikthalen/glorybook-plugin",
+  "license": "ISC",
+  "dependencies": {
+    "@contentful/rich-text-html-renderer": "^13.4.0",
+    "contentful": "^7.10.0"
+  }
+}
