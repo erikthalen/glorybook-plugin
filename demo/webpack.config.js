@@ -8,10 +8,10 @@ module.exports = {
         fs: 'empty'
     },
     plugins: [
-        new GlorybookPlugin({
-            space: process.env.SPACE || 'your space id',
-            accessToken: process.env.ACCESS_TOKEN || 'your access token',
-        }),
+        // new GlorybookPlugin({
+        //     space: process.env.SPACE || 'your space id',
+        //     accessToken: process.env.ACCESS_TOKEN || 'your access token',
+        // }),
         new RemovePlugin({
             after: {
                 include: ['dist'],

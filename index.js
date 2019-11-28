@@ -1,4 +1,5 @@
 const util = require('util')
+const defaults = require('./lib/defaults')
 const modelData = require('./lib/model-data')
 const getContentfulPages = require('./lib/api')
 const makeMdxString = require('./lib/make-mdx-string')
@@ -7,29 +8,30 @@ const {
   addSlash,
   removeProperties
 } = require('./lib/utils')
-const backupData = require('./lib/backup-data')
-const mockData = require('./demo/data/mock-data')
 
-const USE_MOCK_DATA = false
+// Run in client -> no way of letting GlBook handle the fetching.
+// 
+// therefore:
+// 
+// 1. external server requests CF json data,
+//    and declares it to global var/exported module.
+// 2. GlBook listens for when data is available,
+//    and runs "it's thing" then and only then. (on pageload in the client)
+// 3. SB sees the "pages" and creates a menu with content.
+//
+// note: find a way to async get data into glbook
+// note: can't use node/fs to create files. can addon-docs find pages another way?
+// note: should glbook run on each page refresh, then how? (export itseft as a function into static-storybook?)
+// note: order is important:
+//         -> first get data
+//         -> then run GlBook
+//         -> last SB!
+
 
 module.exports = class GlorybookPlugin {
   constructor(options = {}) {
-    const defaults = {
-      srcFolder: '/src',
-      subFolder: '/contentful',
-     
-      environment: 'master',
-      contentTypeId: 'page',
-      labelDefinedBy: 'label',
-      pathDefinedBy: 'path',
-      
-      additionalHead: '',
-      camelCase: false,
-      fullPathOutput: false,
-      nestedOutput: true,
-    }
-
     Object.assign(this, defaults, options)
+    
     this.srcFolder = addSlash(this.srcFolder)
     this.subFolder = addSlash(this.subFolder)
   }
@@ -37,16 +39,20 @@ module.exports = class GlorybookPlugin {
     compiler.hooks.beforeRun.tap("GlorybookPlugin", async stats => {
       // path to your project's src folder
       const SRC_FOLDER = stats.context + this.srcFolder
+
       // unstructured data from contentful
-      const contentfulData = USE_MOCK_DATA ? mockData : await getContentfulPages(this.space, this.accessToken, this.environment, this.contentTypeId)
+      const contentfulData = await getContentfulPages(this.space, this.accessToken, this.environment, this.contentTypeId)
       
-      if (!USE_MOCK_DATA) {
-        //backupData(stats.context + '/data/mock-data.js', JSON.stringify(contentfulData))
-      }
+      // if (!USE_MOCK_DATA) {
+      //   backupData(stats.context + '/data/mock-data.js', JSON.stringify(contentfulData))
+      // }
 
       //console.log(util.inspect(contentfulData, true, 99, true))
 
-      if(!contentfulData) return
+      if(!contentfulData) {
+        console.log(`GlorybookPlugin didn't recieve any data, and will not run :/`)
+        return
+      }
 
       // filter the data a bit (f.ex. remove 'sys' data)
       const pages = contentfulData.items.map(page => page.fields)

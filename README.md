@@ -17,10 +17,10 @@ yarn add --dev glorybook
 
 ## Usage
 
-The plugin will fetch data from the supplied contentful space, and output .mdx-files inside your webpack /src-folder.
+The plugin will fetch data from the supplied contentful space, and output .mdx-files in the project's webpack /src-folder.
 By default the created files are put in a subfolder named `/contentful`.
 
-*Be sure to not expose your space/access token in your public code*
+*Be sure to not expose any senible data in public code*
 
 **webpack.config.js**
 ```javascript
@@ -38,7 +38,7 @@ module.exports = {
 
 ## Example
 
-This setup in your contentful content model:  
+This setup in the contentful content model:  
 ![Screenshot of contentful UI](https://i.ibb.co/kMWqPhf/contentful-screen.jpg)
 
 Will output this in storybook:  
@@ -63,16 +63,16 @@ With a file structure like this:
 
 | Name             | Type       | Default         | Description                                                                                                                    |
 | ---------------- | ---------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `environment`    | `{String}` | `'master'`      | Defines what contentful environment you want to get data from.                                                                 |
-| `srcFolder`      | `{String}` | `'/src'`        | Defines where your src-folder lives.                                                                                           |
+| `environment`    | `{String}` | `'master'`      | Defines what contentful environment to get data from.                                                                          |
+| `srcFolder`      | `{String}` | `'/src'`        | Defines where the src-folder lives.                                                                                            |
 | `subFolder`      | `{String}` | `'/contentful'` | Defines where the generated files will be put, inside the `srcFolder`                                                          |
-| `contentTypeId`  | `{String}` | `'page'`        | The id of your contentful pages that you like to fetch                                                                         |
-| `additionalHead` | `{String}` | `''`            | If you have more content you like to paste in the top of every file                                                            |
-| `camelCase`      | `{Bool}`   | `false`         | If you want the generated files to be named in in camelCase. When `false`, they will be in kebab-case                          |
+| `contentTypeId`  | `{String}` | `'page'`        | The id of the contentful pages that should be fetched                                                                          |
+| `additionalHead` | `{String}` | `''`            | If there's more content to paste in the top of every file                                                                      |
+| `camelCase`      | `{Bool}`   | `false`         | If the generated files shoud be named in in camelCase. When `false`, they will be in kebab-case                                |
 | `fullPathOutput` | `{Bool}`   | `false`         | When the page is nested, this will keep the full relative path in the filename. When `false`, only the last part will be kept. |
-| `nestedOutput`   | `{Bool}`   | `true`          | If the files should be placed in folders just like in storyfull. `false` will place all files in the,un-nested , `subFolder`   |
-| `labelDefinedBy` | `{String}` | `'label'`       | The id your contentful entry that defines label the file will be placed under                                                  |
-| `pathDefinedBy`  | `{String}` | `'path'`        | The id your contentful entry that defines what path/filename the file will get                                                 |
+| `nestedOutput`   | `{Bool}`   | `true`          | If the files should be placed in folders just like in storybook. `false` will place all files directly in `subFolder`          |
+| `labelDefinedBy` | `{String}` | `'label'`       | The id of the contentful entry that defines what label the file will be placed under                                           |
+| `pathDefinedBy`  | `{String}` | `'path'`        | The id of the contentful entry that defines what path/filename the file will get                                               |
   
 
 ---
@@ -80,7 +80,7 @@ With a file structure like this:
 ## Dev-notes
 
 The `/demo`-folder is used for previewing any test output during development of this plugin.  
-This folder has a copy of storybook installed in order for us to run the plugin and have a real-world environment to sandbox in.  
+This folder has a copy of storybook installed in order to run the plugin and have a real-world environment to sandbox in.  
 
 For getting started with building on this project, run:
 ```bash

@@ -10,7 +10,7 @@
     "build": "cd demo && webpack"
   },
   "engines": {
-    "node": ">= 10.*"
+    "node": ">= 10.13"
   },
   "keywords": [
     "storybook",
